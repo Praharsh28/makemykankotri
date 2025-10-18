@@ -1,0 +1,129 @@
+/**
+ * useTemplate Hook - React hook for template operations
+ * Simplifies template CRUD in React components
+ */
+
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Template } from '../types';
+import { templateStorage } from './TemplateStorage';
+
+export function useTemplate(templateId?: string) {
+  const [template, setTemplate] = useState<Template | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  // Load template on mount
+  useEffect(() => {
+    if (templateId) {
+      loadTemplate(templateId);
+    }
+  }, [templateId]);
+
+  const loadTemplate = async (id: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const loaded = await templateStorage.load(id);
+      setTemplate(loaded);
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveTemplate = async (templateData: Template) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const saved = await templateStorage.save(templateData);
+      setTemplate(saved);
+      return saved;
+    } catch (err) {
+      setError(err as Error);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const publishTemplate = async (id: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const published = await templateStorage.publish(id);
+      setTemplate(published);
+      return published;
+    } catch (err) {
+      setError(err as Error);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteTemplate = async (id: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await templateStorage.delete(id);
+      setTemplate(null);
+    } catch (err) {
+      setError(err as Error);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    template,
+    loading,
+    error,
+    loadTemplate,
+    saveTemplate,
+    publishTemplate,
+    deleteTemplate,
+  };
+}
+
+export function useTemplates(options?: {
+  published?: boolean;
+  category?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    loadTemplates();
+  }, [options?.published, options?.category, options?.limit, options?.offset]);
+
+  const loadTemplates = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const loaded = await templateStorage.list(options);
+      setTemplates(loaded);
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refresh = () => {
+    loadTemplates();
+  };
+
+  return {
+    templates,
+    loading,
+    error,
+    refresh,
+  };
+}
