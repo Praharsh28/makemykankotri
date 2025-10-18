@@ -6,7 +6,7 @@
 'use client';
 
 import React from 'react';
-import { Element } from '@/core/types';
+import { Element as TemplateElement } from '@/core/types';
 import { useEditorStore } from '@/core/editor-state';
 
 export interface PropertiesPanelProps {
@@ -99,7 +99,7 @@ function TextProperties({
   onChange,
   onStyleChange,
 }: {
-  element: Element;
+  element: TemplateElement;
   onChange: (field: string, value: unknown) => void;
   onStyleChange: (key: string, value: unknown) => void;
 }) {
@@ -183,7 +183,7 @@ function ImageProperties({
   onChange,
   onStyleChange,
 }: {
-  element: Element;
+  element: TemplateElement;
   onChange: (field: string, value: unknown) => void;
   onStyleChange: (key: string, value: unknown) => void;
 }) {
@@ -242,7 +242,7 @@ function PositionProperties({
   element,
   onChange,
 }: {
-  element: Element;
+  element: TemplateElement;
   onChange: (field: string, value: unknown) => void;
 }) {
   return (
@@ -321,7 +321,7 @@ function EditableToggle({
   element,
   onChange,
 }: {
-  element: Element;
+  element: TemplateElement;
   onChange: (field: string, value: unknown) => void;
 }) {
   return (

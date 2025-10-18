@@ -57,16 +57,33 @@ export interface BorderStyle {
 }
 
 export interface ElementStyle {
+  // Font properties
   font?: string;
+  fontFamily?: string;
   fontSize?: number;
-  fontWeight?: number;
+  fontWeight?: number | string;
+  
+  // Text properties
   color?: string;
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  textDecoration?: string;
+  lineHeight?: number | string;
+  
+  // Background properties
   background?: string;
+  backgroundColor?: string;
+  
+  // Layout properties
   border?: BorderStyle;
-  padding?: Spacing;
-  margin?: Spacing;
+  borderRadius?: number;
+  padding?: Spacing | number;
+  margin?: Spacing | number;
+  
+  // Visual effects
   opacity?: number;
   transform?: string;
+  
+  // Allow additional properties
   [key: string]: unknown;
 }
 

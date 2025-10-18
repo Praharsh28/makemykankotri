@@ -5,10 +5,10 @@
 
 import React from 'react';
 import { ComponentConfig } from '@measured/puck';
-import { Element } from '@/core/types';
+import { Element as TemplateElement } from '@/core/types';
 
 export interface PuckComponentProps {
-  element: Element;
+  element: TemplateElement;
   [key: string]: unknown;
 }
 

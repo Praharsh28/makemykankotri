@@ -8,12 +8,12 @@
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { Element } from '@/core/types';
+import { Element as TemplateElement } from '@/core/types';
 
 export interface DraggableElementProps {
-  element: Element;
+  element: TemplateElement;
   children: React.ReactNode;
-  onSelect?: (element: Element) => void;
+  onSelect?: (element: TemplateElement) => void;
   selected?: boolean;
 }
 

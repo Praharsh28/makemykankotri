@@ -15,7 +15,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { Element } from '@/core/types';
+import { Element as TemplateElement } from '@/core/types';
 import { DraggableElement } from './DraggableElement';
 import { useEditorStore } from '@/core/editor-state';
 

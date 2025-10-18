@@ -6,7 +6,7 @@
 'use client';
 
 import React from 'react';
-import { Element } from '@/core/types';
+import { Element as TemplateElement, Template } from '@/core/types';
 import { useEditorStore } from '@/core/editor-state';
 
 export interface LayersPanelProps {
@@ -87,7 +87,7 @@ export function LayersPanel({ width = 250 }: LayersPanelProps) {
 
 // Layer Item Component
 interface LayerItemProps {
-  element: Element;
+  element: TemplateElement;
   selected: boolean;
   onSelect: () => void;
   onToggleVisibility: () => void;
