@@ -64,6 +64,8 @@ export function AnimationLibrary({
   columns = 3,
   searchable = false,
 }: AnimationLibraryProps) {
+  // Track selected animation (unused in this version but kept for future interactivity)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedId, setSelectedId] = useState<string | null>(selectedAnimation?.type || null);
   const [searchQuery, setSearchQuery] = useState('');
 

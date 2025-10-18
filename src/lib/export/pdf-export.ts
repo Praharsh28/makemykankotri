@@ -23,10 +23,13 @@ export async function exportToPDF(
 ): Promise<void> {
   const {
     filename = 'kankotri.pdf',
-    format = 'a4',
     orientation = 'portrait',
     scale = 2,
   } = options;
+
+  // format is kept for API compatibility but unused (custom dimensions used instead)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { format } = options;
 
   try {
     // Get element

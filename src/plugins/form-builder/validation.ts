@@ -4,6 +4,7 @@
  */
 
 import { z } from 'zod';
+import type { Element as TemplateElement } from '@/core/types';
 import type { FormField } from './types';
 
 /**
@@ -79,7 +80,7 @@ export function createFormSchema(fields: FormField[]): z.ZodObject<Record<string
 /**
  * Extract form fields from template elements
  */
-export function extractFormFields(elements: Element[], editableFieldIds: string[]): FormField[] {
+export function extractFormFields(elements: TemplateElement[], editableFieldIds: string[]): FormField[] {
   const fields: FormField[] = [];
 
   elements.forEach((element) => {
