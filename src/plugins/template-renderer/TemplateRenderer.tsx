@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { featureFlags } from '@/core/feature-flags';
-import type { Template, Element } from '@/core/types';
+import type { Template, Element as TemplateElement } from '@/core/types';
 
 export interface TemplateRendererProps {
   template: Template;
@@ -47,7 +47,7 @@ export function TemplateRenderer({
 }
 
 interface RenderedElementProps {
-  element: Element;
+  element: TemplateElement;
   data: Record<string, unknown>;
 }
 
@@ -85,7 +85,7 @@ function RenderedElement({ element, data }: RenderedElementProps) {
   }
 
   if (element.type === 'gallery') {
-    const images = element.content as Array<{ url: string; alt: string }>;
+    const images = element.content as unknown as Array<{ url: string; alt: string }>;
     return (
       <div data-element-id={element.id} style={{ ...style, display: 'flex', gap: '8px' }}>
         {images.map((img, idx) => (
@@ -101,7 +101,7 @@ function RenderedElement({ element, data }: RenderedElementProps) {
   }
 
   if (element.type === 'container') {
-    const children = element.content as Element[];
+    const children = element.content as unknown as TemplateElement[];
     return (
       <div data-element-id={element.id} style={style}>
         {children.map((child) => (
@@ -155,7 +155,7 @@ function getNestedValue(obj: Record<string, unknown>, key: string): unknown {
 /**
  * Convert element style to React CSS Properties
  */
-function convertStyle(style: Element['style']): React.CSSProperties {
+function convertStyle(style: TemplateElement['style']): React.CSSProperties {
   return {
     fontFamily: style.fontFamily,
     fontSize: style.fontSize ? `${style.fontSize}px` : undefined,
