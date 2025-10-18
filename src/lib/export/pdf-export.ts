@@ -23,7 +23,6 @@ export async function exportToPDF(
 ): Promise<void> {
   const {
     filename = 'kankotri.pdf',
-    quality = 1.0,
     format = 'a4',
     orientation = 'portrait',
     scale = 2,
@@ -50,7 +49,7 @@ export async function exportToPDF(
     const imgHeight = canvas.height;
 
     // Convert canvas to image data
-    const imgData = canvas.toDataURL('image/png', quality);
+    const imgData = canvas.toDataURL('image/png', options.quality);
 
     // Create PDF
     const pdf = new jsPDF({
@@ -136,11 +135,14 @@ export async function generatePDFBlob(
   options: PDFExportOptions = {}
 ): Promise<Blob> {
   const {
-    quality = 1.0,
-    format = 'a4',
     orientation = 'portrait',
     scale = 2,
+    quality = 0.95,
   } = options;
+  
+  // Unused but kept for API compatibility
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { filename } = options;
 
   try {
     const element = document.getElementById(elementId);

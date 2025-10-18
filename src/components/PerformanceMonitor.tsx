@@ -7,13 +7,19 @@
 
 import { useEffect } from 'react';
 
+interface Metric {
+  name: string;
+  value: number;
+  rating: string;
+}
+
 export function PerformanceMonitor() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     // Dynamic import to avoid SSR issues
     import('web-vitals').then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
-      const sendToAnalytics = (metric: any) => {
+      const sendToAnalytics = (metric: Metric) => {
         // In production, send to your analytics service
         if (process.env.NODE_ENV === 'development') {
           console.log('[Performance]', {

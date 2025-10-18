@@ -69,7 +69,7 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
           router.push(redirectTo);
         }
       }, 2000);
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred');
       setLoading(false);
     }

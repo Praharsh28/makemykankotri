@@ -35,13 +35,14 @@ export function GalleryFilters({
 
   // Debounced search
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const handler = setTimeout(() => {
       if (searchInput !== filters.search) {
         updateFilters({ search: searchInput });
       }
     }, 300);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput]);
 
   function updateFilters(updates: Partial<FilterState>) {

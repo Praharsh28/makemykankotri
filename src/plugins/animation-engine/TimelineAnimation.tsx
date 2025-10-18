@@ -30,13 +30,11 @@ export function TimelineAnimation({
   animateFrom,
   onComplete,
 }: TimelineAnimationProps) {
-  // Check feature flag
-  if (!featureFlags.isEnabled('animation-engine')) {
-    return null;
-  }
-
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | undefined>(undefined);
+
+  // Check feature flag
+  const isEnabled = featureFlags.isEnabled('animation-engine');
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -86,7 +84,11 @@ export function TimelineAnimation({
     return () => {
       tl.kill();
     };
-  }, [duration, delay, stagger, ease, paused, reverse, animateFrom, onComplete]);
+  }, [duration, delay, stagger, ease, paused, reverse, animateFrom, onComplete, isEnabled]);
+
+  if (!isEnabled) {
+    return <>{children}</>;
+  }
 
   return (
     <div ref={containerRef} data-animated="true">

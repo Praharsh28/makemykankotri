@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import { V0Generator } from './V0Generator';
 import { featureFlags } from '@/core/feature-flags';
-import { eventBus } from '@/core/event-bus';
 import type { Template } from '@/core/types';
 import type { V0GenerationResult } from './types';
 

@@ -28,10 +28,9 @@ export function MyTemplatesList({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user) {
-      loadTemplates();
-    }
-  }, [user]);
+    loadTemplates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function loadTemplates() {
     if (!user) return;

@@ -101,6 +101,7 @@ export function useTemplates(options?: {
 
   useEffect(() => {
     loadTemplates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options?.published, options?.category, options?.limit, options?.offset]);
 
   const loadTemplates = async () => {

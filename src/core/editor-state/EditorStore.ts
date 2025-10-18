@@ -4,7 +4,7 @@
  */
 
 import { create } from 'zustand';
-import { Element, Template, EditorState, EditorStore } from '../types';
+import type { Element, Template, EditorStore } from '../types';
 import { eventBus, EVENT_NAMES } from '../event-bus';
 
 export const useEditorStore = create<EditorStore>((set, get) => ({

@@ -18,7 +18,7 @@ export function FormPreview({ data, title = 'Preview' }: FormPreviewProps) {
   }
 
   // Filter out empty/null/undefined values
-  const validEntries = Object.entries(data).filter(([_, value]) => {
+  const validEntries = Object.entries(data).filter(([key, value]) => {
     if (value === null || value === undefined || value === '') {
       return false;
     }

@@ -45,7 +45,7 @@ export function LoginForm({ onSuccess, redirectTo = '/dashboard' }: LoginFormPro
       } else {
         router.push(redirectTo);
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred');
       setLoading(false);
     }
@@ -150,7 +150,7 @@ export function LoginForm({ onSuccess, redirectTo = '/dashboard' }: LoginFormPro
 
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-neutral-600">
-          Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
           <Link
             href="/auth/signup"
             className="text-primary-500 hover:text-primary-600 font-medium"

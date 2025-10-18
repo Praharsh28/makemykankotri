@@ -46,11 +46,6 @@ export function ParticleLayer({
   onStart,
   onStop,
 }: ParticleLayerProps) {
-  // Check feature flag
-  if (!featureFlags.isEnabled('animation-engine')) {
-    return null;
-  }
-
   const isMobile = useIsMobile();
 
   // Adaptive particle count: 12 on mobile, full count on desktop
@@ -63,6 +58,9 @@ export function ParticleLayer({
 
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number | undefined>(undefined);
+
+  // Check feature flag
+  const isEnabled = featureFlags.isEnabled('animation-engine');
 
   const createParticle = (): Particle => ({
     x: Math.random() * dimensions.width,
@@ -139,7 +137,8 @@ export function ParticleLayer({
     g: number,
     s: number
   ): Particle => {
-    let { x, y, vx, vy, radius, opacity: pOpacity } = particle;
+    let { x, y, vx, vy } = particle;
+    const { radius, opacity: pOpacity } = particle;
 
     // Apply velocity
     x += vx * s;
@@ -161,6 +160,10 @@ export function ParticleLayer({
 
     return { x, y, vx, vy, radius, opacity: pOpacity };
   };
+
+  if (!isEnabled) {
+    return null;
+  }
 
   return (
     <Stage width={dimensions.width} height={dimensions.height}>

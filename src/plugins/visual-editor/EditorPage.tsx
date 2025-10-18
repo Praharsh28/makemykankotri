@@ -25,11 +25,12 @@ export function EditorPage({ templateId }: EditorPageProps) {
   // Load template on mount
   useEffect(() => {
     if (templateId) {
-      loadTemplateFromDb();
+      loadTemplateFromDb(templateId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [templateId]);
 
-  const loadTemplateFromDb = async () => {
+  const loadTemplateFromDb = async (templateId: string) => {
     if (!templateId) return;
 
     try {

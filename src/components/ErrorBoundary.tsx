@@ -52,8 +52,9 @@ export class ErrorBoundary extends React.Component<
             <h2 className="text-2xl font-bold text-neutral-900 mb-2">
               Something went wrong
             </h2>
+            <p className="text-lg text-neutral-600">We&apos;re sorry, but something went wrong.</p>
             <p className="text-neutral-600 mb-4">
-              We're sorry for the inconvenience. Please try refreshing the page.
+              Please try refreshing the page.
             </p>
             <button
               onClick={() => window.location.reload()}

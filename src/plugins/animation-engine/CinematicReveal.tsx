@@ -22,13 +22,11 @@ export function CinematicReveal({
   stagger = 0.2,
   ease = 'power3.out',
 }: CinematicRevealProps) {
-  // Check feature flag
-  if (!featureFlags.isEnabled('animation-engine')) {
-    return null;
-  }
-
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | undefined>(undefined);
+
+  // Check feature flag
+  const isEnabled = featureFlags.isEnabled('animation-engine');
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -48,11 +46,16 @@ export function CinematicReveal({
 
     timelineRef.current = tl;
 
-    // Cleanup
     return () => {
-      tl.kill();
+      if (timelineRef.current) {
+        timelineRef.current.kill();
+      }
     };
-  }, [duration, delay, stagger, ease]);
+  }, [duration, delay, stagger, ease, isEnabled]);
+
+  if (!isEnabled) {
+    return <>{children}</>;
+  }
 
   return (
     <div ref={containerRef} data-cinematic="true">

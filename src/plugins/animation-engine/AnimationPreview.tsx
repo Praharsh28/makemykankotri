@@ -14,19 +14,14 @@ export interface AnimationPreviewProps {
   animation: AnimationType;
   showSettings?: boolean;
   onSettingsChange?: (props: Record<string, unknown>) => void;
+  className?: string;
 }
 
-export function AnimationPreview({
-  animation,
-  showSettings = false,
-  onSettingsChange,
-}: AnimationPreviewProps) {
-  // Check feature flag
-  if (!featureFlags.isEnabled('animation-engine')) {
-    return null;
-  }
+export function AnimationPreview({ animation, className = '', showSettings, onSettingsChange }: AnimationPreviewProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const [isPlaying, setIsPlaying] = useState(true);
+  // Check feature flag
+  const isEnabled = featureFlags.isEnabled('animation-engine');
 
   const handleRestart = () => {
     setIsPlaying(false);
@@ -42,11 +37,15 @@ export function AnimationPreview({
     }
   };
 
+  if (!isEnabled) {
+    return null;
+  }
+
   return (
     <div
       data-testid="animation-preview"
       aria-label="Animation preview"
-      className="space-y-4"
+      className={`space-y-4 ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between">

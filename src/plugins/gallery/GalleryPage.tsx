@@ -22,10 +22,6 @@ export function GalleryPage({
   onSelectTemplate,
   selectedTemplateId,
 }: GalleryPageProps) {
-  if (!featureFlags.isEnabled('gallery')) {
-    return null;
-  }
-
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,6 +30,8 @@ export function GalleryPage({
     category: '',
     sortBy: 'popular',
   });
+
+  const isEnabled = featureFlags.isEnabled('gallery');
 
   useEffect(() => {
     loadTemplates();
@@ -103,6 +101,10 @@ export function GalleryPage({
 
     return result;
   }, [templates, filters]);
+
+  if (!isEnabled) {
+    return null;
+  }
 
   if (error) {
     return (

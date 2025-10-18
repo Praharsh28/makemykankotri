@@ -45,6 +45,8 @@ export function ShareButton({ url, showShareOptions = false }: ShareButtonProps)
     setShowOptions(!showOptions);
   };
 
+  // Kept for future implementation
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const shareToWhatsApp = () => {
     const message = `Check out my wedding invitation: ${url}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;

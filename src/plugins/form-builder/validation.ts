@@ -4,8 +4,7 @@
  */
 
 import { z } from 'zod';
-import { Element, ValidationRule } from '@/core/types';
-import { FormField } from './types';
+import type { FormField } from './types';
 
 /**
  * Convert ValidationRule to Zod schema

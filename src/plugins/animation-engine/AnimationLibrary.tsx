@@ -64,12 +64,11 @@ export function AnimationLibrary({
   columns = 3,
   searchable = false,
 }: AnimationLibraryProps) {
-  // Check feature flag
-  if (!featureFlags.isEnabled('animation-engine')) {
-    return null;
-  }
-
+  const [selectedId, setSelectedId] = useState<string | null>(selectedAnimation?.type || null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Check feature flag
+  const isEnabled = featureFlags.isEnabled('animation-engine');
 
   // Filter animations
   const filtered = animations.filter(anim => {
@@ -89,6 +88,10 @@ export function AnimationLibrary({
     3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
     4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
   };
+
+  if (!isEnabled) {
+    return null;
+  }
 
   return (
     <div className="space-y-4">

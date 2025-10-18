@@ -6,9 +6,10 @@
 import { Template, Element } from '@/core/types';
 import { eventBus } from '@/core/event-bus';
 import { z } from 'zod';
-import type { V0GenerationResult, V0Config, V0ApiResponse, TemplateParseResult } from './types';
+import type { V0GenerationResult, V0Config, TemplateParseResult } from './types';
 
-// Validation schemas
+// Validation schema for v0 API response (unused but kept for future validation)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const V0ResponseSchema = z.object({
   code: z.string(),
   framework: z.string(),

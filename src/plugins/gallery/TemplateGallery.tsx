@@ -23,14 +23,12 @@ export function TemplateGallery({
   selectedTemplateId,
   category,
 }: TemplateGalleryProps) {
-  // Check feature flag
-  if (!featureFlags.isEnabled('gallery')) {
-    return null;
-  }
-
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Check feature flag
+  const isEnabled = featureFlags.isEnabled('gallery');
 
   useEffect(() => {
     loadTemplates();
@@ -53,6 +51,10 @@ export function TemplateGallery({
     } finally {
       setLoading(false);
     }
+  }
+
+  if (!isEnabled) {
+    return null;
   }
 
   if (error) {
