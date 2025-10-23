@@ -6,7 +6,7 @@
 'use client';
 
 import React from 'react';
-import { Element as TemplateElement, Template } from '@/core/types';
+import { Element as TemplateElement } from '@/core/types';
 import { useEditorStore } from '@/core/editor-state';
 
 export interface LayersPanelProps {

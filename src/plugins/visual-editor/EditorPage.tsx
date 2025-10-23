@@ -125,7 +125,7 @@ export function EditorPage({ templateId }: EditorPageProps) {
           </h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
-            onClick={loadTemplateFromDb}
+            onClick={() => templateId && loadTemplateFromDb(templateId)}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Try Again
