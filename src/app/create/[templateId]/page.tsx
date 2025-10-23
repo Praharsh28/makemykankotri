@@ -148,8 +148,6 @@ export default function CreateInvitationPage({
             <FormGenerator
               template={template}
               onSubmit={handleGenerate}
-              submitLabel={generating ? "Generating..." : "Generate Invitation →"}
-              disabled={generating}
             />
           </div>
 
