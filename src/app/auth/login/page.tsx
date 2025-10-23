@@ -10,6 +10,9 @@ import React from 'react';
 import Link from 'next/link';
 import { LoginForm } from '@/components/auth/LoginForm';
 
+// Disable static generation for auth pages
+export const dynamic = 'force-dynamic';
+
 export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center p-4">

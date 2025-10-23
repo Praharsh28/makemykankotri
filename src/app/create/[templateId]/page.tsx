@@ -25,7 +25,6 @@ export default function CreateInvitationPage({
   const [formData, setFormData] = useState<Record<string, unknown>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     loadTemplate();
@@ -46,7 +45,6 @@ export default function CreateInvitationPage({
 
   async function handleGenerate(data: Record<string, unknown>) {
     try {
-      setGenerating(true);
       setFormData(data);
 
       // Save invitation to database
@@ -60,7 +58,6 @@ export default function CreateInvitationPage({
       router.push(`/invitation/${invitationId}?template=${params.templateId}&data=${dataParam}`);
     } catch (err) {
       setError((err as Error).message);
-      setGenerating(false);
     }
   }
 
