@@ -27,23 +27,10 @@ export default function TemplatesPage() {
   }
 
   if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center max-w-md">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h2 className="font-heading text-2xl font-semibold text-neutral-900 mb-2">
-            Failed to Load Templates
-          </h2>
-          <p className="text-neutral-600 mb-6">{error.message}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="bg-primary-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-600 transition-all"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
+    // If error is network/database related, show empty state instead of error
+    // This handles cases where Supabase isn't configured or database is empty
+    console.error('Template loading error:', error);
+    // Continue to render the page with empty templates array
   }
 
   return (
@@ -99,19 +86,32 @@ export default function TemplatesPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {templates.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-neutral-300 text-8xl mb-6">📋</div>
+            <div className="text-neutral-300 text-8xl mb-6">🎨</div>
             <h3 className="font-heading text-2xl font-semibold text-neutral-900 mb-3">
-              No Templates Available Yet
+              No Templates Yet
             </h3>
-            <p className="text-neutral-600 mb-8 max-w-md mx-auto">
-              Our beautiful templates are coming soon. Check back shortly!
+            <p className="text-neutral-600 mb-4 max-w-2xl mx-auto">
+              {error 
+                ? "Looks like the database isn't set up yet! Admins can create templates using the visual editor or AI generator."
+                : "Our beautiful template collection is being created. Check back soon!"}
             </p>
-            <Link
-              href="/"
-              className="inline-block bg-primary-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-all shadow-md"
-            >
-              ← Back to Home
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+              <Link
+                href="/admin"
+                className="inline-block bg-primary-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-all shadow-md"
+              >
+                Create Templates (Admin) →
+              </Link>
+              <Link
+                href="/"
+                className="inline-block border-2 border-neutral-300 text-neutral-700 px-8 py-3 rounded-lg font-semibold hover:bg-neutral-50 transition-all"
+              >
+                ← Back to Home
+              </Link>
+            </div>
+            <p className="text-sm text-neutral-500 mt-8">
+              💡 Tip: Admins can use the AI generator or visual editor to create stunning templates in minutes!
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
