@@ -15,6 +15,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import { Element as TemplateElement } from '@/core/types';
 import { DraggableElement } from './DraggableElement';
 import { useEditorStore } from '@/core/editor-state';
 
@@ -56,7 +57,7 @@ export function EditorCanvas({
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
-    const element = active.data.current?.element as Element;
+    const element = active.data.current?.element as TemplateElement;
 
     if (!element) return;
 
