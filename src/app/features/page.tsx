@@ -94,7 +94,7 @@ export default function FeaturesPage() {
                   Smart Forms
                 </h3>
                 <p className="text-neutral-600 text-lg leading-relaxed">
-                  Simple, intelligent forms that only ask for what's needed. No design skills required—just fill in your details and watch your invitation come to life with real-time preview.
+                  Simple, intelligent forms that only ask for what&apos;s needed. No design skills required—just fill in your details and watch your invitation come to life with real-time preview.
                 </p>
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function FeaturesPage() {
                   Instant Sharing
                 </h3>
                 <p className="text-neutral-600 text-lg leading-relaxed">
-                  Get a unique URL to share instantly. Share via WhatsApp, email, social media, or copy the link. Track views and know who's seen your invitation (coming soon).
+                  Get a unique URL to share instantly. Share via WhatsApp, email, social media, or copy the link. Track views and know who&apos;s seen your invitation (coming soon).
                 </p>
               </div>
             </div>

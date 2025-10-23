@@ -8,10 +8,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation'; // TODO: Will be used when AI generation is fully integrated
 
 export default function AIGeneratorPage() {
-  const router = useRouter();
+  // const router = useRouter();
   const [prompt, setPrompt] = useState('');
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);

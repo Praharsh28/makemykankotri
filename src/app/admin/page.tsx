@@ -15,7 +15,7 @@ export default function AdminDashboardPage() {
 
   const publishedCount = templates.filter(t => t.published).length;
   const draftCount = templates.filter(t => !t.published).length;
-  const totalViews = templates.reduce((sum, t) => sum + (t.views || 0), 0);
+  // const totalViews = templates.reduce((sum, t) => sum + (t.views || 0), 0); // TODO: Display in stats
   const totalUses = templates.reduce((sum, t) => sum + (t.uses || 0), 0);
 
   return (
