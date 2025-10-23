@@ -8,10 +8,20 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { MyTemplatesList } from '@/components/dashboard/MyTemplatesList';
+import dynamicImport from 'next/dynamic';
 
 // Disable static generation for user dashboard
 export const dynamic = 'force-dynamic';
+
+// Dynamically import MyTemplatesList with no SSR to prevent build errors
+const MyTemplatesList = dynamicImport(() => import('@/components/dashboard/MyTemplatesList').then(mod => ({ default: mod.MyTemplatesList })), {
+  ssr: false,
+  loading: () => (
+    <div className="flex justify-center py-12">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+    </div>
+  ),
+});
 
 export default function DashboardPage() {
   return (

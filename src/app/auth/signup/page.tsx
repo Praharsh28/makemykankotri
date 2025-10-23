@@ -8,10 +8,20 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { SignupForm } from '@/components/auth/SignupForm';
+import dynamicImport from 'next/dynamic';
 
 // Disable static generation for auth pages
 export const dynamic = 'force-dynamic';
+
+// Dynamically import SignupForm with no SSR to prevent build errors
+const SignupForm = dynamicImport(() => import('@/components/auth/SignupForm').then(mod => ({ default: mod.SignupForm })), {
+  ssr: false,
+  loading: () => (
+    <div className="flex justify-center py-12">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+    </div>
+  ),
+});
 
 export default function SignupPage() {
   return (

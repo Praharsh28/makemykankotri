@@ -8,10 +8,20 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { LoginForm } from '@/components/auth/LoginForm';
+import dynamicImport from 'next/dynamic';
 
 // Disable static generation for auth pages
 export const dynamic = 'force-dynamic';
+
+// Dynamically import LoginForm with no SSR to prevent build errors
+const LoginForm = dynamicImport(() => import('@/components/auth/LoginForm').then(mod => ({ default: mod.LoginForm })), {
+  ssr: false,
+  loading: () => (
+    <div className="flex justify-center py-12">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+    </div>
+  ),
+});
 
 export default function LoginPage() {
   return (
