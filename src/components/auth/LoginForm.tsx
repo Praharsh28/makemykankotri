@@ -35,7 +35,12 @@ export function LoginForm({ onSuccess, redirectTo = '/dashboard' }: LoginFormPro
       const { error: signInError } = await signIn(email, password);
 
       if (signInError) {
-        setError(signInError.message);
+        // Provide helpful message for common setup issues
+        if (signInError.message.includes('fetch') || signInError.message.includes('NetworkError')) {
+          setError('⚠️ Supabase is not configured. Please set up your Supabase project and add environment variables.');
+        } else {
+          setError(signInError.message);
+        }
         setLoading(false);
         return;
       }
@@ -45,8 +50,9 @@ export function LoginForm({ onSuccess, redirectTo = '/dashboard' }: LoginFormPro
       } else {
         router.push(redirectTo);
       }
-    } catch {
-      setError('An unexpected error occurred');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('⚠️ Authentication system is not configured. Please contact the administrator.');
       setLoading(false);
     }
   }

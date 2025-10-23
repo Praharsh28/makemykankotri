@@ -54,7 +54,12 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
       });
 
       if (signUpError) {
-        setError(signUpError.message);
+        // Provide helpful message for common setup issues
+        if (signUpError.message.includes('fetch') || signUpError.message.includes('NetworkError')) {
+          setError('⚠️ Supabase is not configured. Please set up your Supabase project and add environment variables.');
+        } else {
+          setError(signUpError.message);
+        }
         setLoading(false);
         return;
       }
@@ -69,8 +74,9 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
           router.push(redirectTo);
         }
       }, 2000);
-    } catch {
-      setError('An unexpected error occurred');
+    } catch (err) {
+      console.error('Signup error:', err);
+      setError('⚠️ Authentication system is not configured. Please contact the administrator.');
       setLoading(false);
     }
   }
