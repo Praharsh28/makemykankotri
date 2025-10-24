@@ -1,6 +1,25 @@
 # 🚀 Supabase Setup Guide for WebKankotri v2
 
-You have your `.env.local` file with credentials, but you're getting **"Failed to fetch"** errors because your Supabase database doesn't have the required tables yet.
+Are you getting **"Failed to fetch"** errors? This guide will help you fix it!
+
+## 🔍 Step 0: Verify Your Configuration (DO THIS FIRST!)
+
+Run this command to check if your `.env.local` is set up correctly:
+
+```bash
+node check-supabase-config.js
+```
+
+This will tell you:
+- ✅ If your `.env.local` exists
+- ✅ If your SUPABASE_URL is correct
+- ✅ If your SUPABASE_ANON_KEY is correct
+- ✅ If Supabase is reachable
+- ❌ What's wrong if it's not working
+
+**Fix any errors it shows before continuing!**
+
+---
 
 ## ⚡ Quick Fix (5 minutes)
 
@@ -54,18 +73,50 @@ npm run dev
 
 ## 🔍 Troubleshooting
 
-### Error: "Failed to fetch" still happening
+### Error: "Failed to fetch" (Most Common!)
 
-**Check your environment variables are loaded:**
+This error means Supabase can't be reached. **Run the diagnostic first:**
 
-1. Stop dev server (Ctrl+C)
-2. Verify `.env.local` has:
+```bash
+node check-supabase-config.js
+```
+
+**Common causes:**
+
+**1. Missing or wrong .env.local file**
+   ```bash
+   # Create .env.local in project root with:
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
    ```
-   NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJ...
+
+**2. Using example values (not real credentials)**
+   - ❌ `https://your-project.supabase.co` (this is an example!)
+   - ✅ `https://ebaqzmfejeymmxfxkmczi.supabase.co` (real project)
+   
+**3. Spaces around the = sign**
+   - ❌ `NEXT_PUBLIC_SUPABASE_URL = https://...` (spaces!)
+   - ✅ `NEXT_PUBLIC_SUPABASE_URL=https://...` (no spaces!)
+
+**4. Server not restarted after changing .env.local**
+   ```bash
+   # Must restart after editing .env.local!
+   # Stop: Ctrl+C
+   npm run dev
    ```
-3. Make sure there are NO spaces around the `=` sign
-4. Restart dev server: `npm run dev`
+
+**5. Wrong Supabase key (using service_role instead of anon)**
+   - Go to Supabase → Settings → API
+   - Copy the **"anon public"** key (NOT service_role!)
+
+**How to get correct credentials:**
+1. Go to https://supabase.com/dashboard
+2. Select your project (or create new one)
+3. Go to Settings → API
+4. Copy **"Project URL"** → NEXT_PUBLIC_SUPABASE_URL
+5. Copy **"anon public"** key → NEXT_PUBLIC_SUPABASE_ANON_KEY
+6. Paste both in `.env.local`
+7. Restart server!
 
 ### Error: "relation 'templates' does not exist"
 
