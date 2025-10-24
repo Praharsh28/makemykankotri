@@ -259,16 +259,16 @@ INSERT INTO public.templates (
   '[
     {
       "id": "bride_name",
-      "label": "Bride'\''s Name",
+      "label": "Bride''s Name",
       "type": "text",
-      "placeholder": "Enter bride'\''s name",
+      "placeholder": "Enter bride''s name",
       "required": true
     },
     {
       "id": "groom_name",
-      "label": "Groom'\''s Name",
+      "label": "Groom''s Name",
       "type": "text",
-      "placeholder": "Enter groom'\''s name",
+      "placeholder": "Enter groom''s name",
       "required": true
     },
     {
