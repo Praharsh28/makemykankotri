@@ -62,12 +62,21 @@ Track potential issues, inconsistencies, and improvements found during code-grou
 # Next Actions
 All critical issues resolved! ✅
 
+**Completed Improvements:**
+1. ✅ Extracted renderer utilities to `core/renderer-engine`
+   - Created dataInjector, styleConverter, elementRenderer modules
+   - Refactored TemplateRenderer to use core utilities
+   - Added smoke tests for dataInjector
+2. ✅ Added smoke tests for core modules
+   - event-bus.test.ts (on/off/emit/once behavior)
+   - feature-flags.test.ts (enable/disable/toggle/reset)
+   - dataInjector.test.ts (placeholder injection)
+
 **Optional Future Improvements:**
-1. Extract renderer utilities to `core/renderer-engine`
-2. Add smoke tests for core modules (event-bus, feature-flags, TemplateStorage)
-3. Implement SSR auth checks in middleware (when needed)
-4. Add rate limiting on auth endpoints
-5. Monitor performance impact of next/image on templates page
+1. Implement SSR auth checks in middleware (when needed)
+2. Add rate limiting on auth endpoints
+3. Monitor performance impact of next/image on templates page
+4. Add smoke tests for TemplateStorage mapper
 
 # Changelog
 - 2025-10-25: Initial audit created

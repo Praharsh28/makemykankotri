@@ -20,7 +20,7 @@ summary: Global index for AI agents to navigate the documentation.
   - /docs/core/element-system.md
   - /docs/core/template-system.md
   - /docs/core/editor-state.md
-  - /docs/core/renderer-engine.md
+  - /docs/core/renderer-engine.md (implementation: /src/core/renderer-engine/)
   - /docs/core/feature-flags.md
 
 - Plugins

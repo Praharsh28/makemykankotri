@@ -6,6 +6,13 @@
 import React from 'react';
 import { featureFlags } from '@/core/feature-flags';
 import type { Template, Element as TemplateElement } from '@/core/types';
+import {
+  injectData,
+  convertStyle,
+  convertPositionStyle,
+  convertLayoutStyle,
+  mergeStyles,
+} from '@/core/renderer-engine';
 
 export interface TemplateRendererProps {
   template: Template;
@@ -27,13 +34,7 @@ export function TemplateRenderer({
     <div
       data-testid="template-container"
       data-mode={mode}
-      style={{
-        position: 'relative',
-        width: `${template.layout.width}px`,
-        height: `${template.layout.height}px`,
-        backgroundColor: template.layout.background,
-        overflow: 'hidden',
-      }}
+      style={convertLayoutStyle(template.layout)}
     >
       {template.elements.map((element) => (
         <RenderedElement
@@ -53,16 +54,10 @@ interface RenderedElementProps {
 
 function RenderedElement({ element, data }: RenderedElementProps) {
   const content = injectData(element.content, data);
-
-  const style: React.CSSProperties = {
-    position: 'absolute',
-    left: `${element.position.x}px`,
-    top: `${element.position.y}px`,
-    zIndex: element.position.z,
-    width: typeof element.size.width === 'number' ? `${element.size.width}px` : element.size.width,
-    height: typeof element.size.height === 'number' ? `${element.size.height}px` : element.size.height,
-    ...convertStyle(element.style),
-  };
+  const style = mergeStyles(
+    convertPositionStyle(element.position, element.size),
+    convertStyle(element.style)
+  );
 
   if (element.type === 'text') {
     return (
@@ -88,7 +83,7 @@ function RenderedElement({ element, data }: RenderedElementProps) {
   if (element.type === 'gallery') {
     const images = element.content as unknown as Array<{ url: string; alt: string }>;
     return (
-      <div data-element-id={element.id} style={{ ...style, display: 'flex', gap: '8px' }}>
+      <div data-element-id={element.id} style={mergeStyles(style, { display: 'flex', gap: '8px' })}>
         {images.map((img, idx) => (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -114,59 +109,4 @@ function RenderedElement({ element, data }: RenderedElementProps) {
   }
 
   return null;
-}
-
-/**
- * Inject data into content placeholders
- */
-function injectData(content: unknown, data: Record<string, unknown>): unknown {
-  if (typeof content !== 'string') {
-    return content;
-  }
-
-  let result = content;
-
-  // Replace {{key}} placeholders
-  const placeholderRegex = /\{\{([^}]+)\}\}/g;
-  result = result.replace(placeholderRegex, (match, key) => {
-    const value = getNestedValue(data, key.trim());
-    return value !== undefined ? String(value) : match;
-  });
-
-  return result;
-}
-
-/**
- * Get nested object value by dot notation key
- */
-function getNestedValue(obj: Record<string, unknown>, key: string): unknown {
-  const keys = key.split('.');
-  let value: unknown = obj;
-
-  for (const k of keys) {
-    if (value && typeof value === 'object' && k in value) {
-      value = (value as Record<string, unknown>)[k];
-    } else {
-      return undefined;
-    }
-  }
-
-  return value;
-}
-
-/**
- * Convert element style to React CSS Properties
- */
-function convertStyle(style: TemplateElement['style']): React.CSSProperties {
-  return {
-    fontFamily: style.fontFamily,
-    fontSize: style.fontSize ? `${style.fontSize}px` : undefined,
-    color: style.color,
-    fontWeight: style.fontWeight,
-    textAlign: style.textAlign,
-    backgroundColor: style.backgroundColor,
-    padding: style.padding ? `${style.padding}px` : undefined,
-    margin: style.margin ? `${style.margin}px` : undefined,
-    borderRadius: style.borderRadius ? `${style.borderRadius}px` : undefined,
-  };
 }
