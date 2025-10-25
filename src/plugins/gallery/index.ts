@@ -5,6 +5,7 @@
 
 import type { Plugin } from '@/core/types';
 import { featureFlags } from '@/core/feature-flags';
+import { pluginRegistry } from '@/core/plugin-system';
 
 export const galleryPlugin: Plugin = {
   name: 'gallery',
@@ -29,3 +30,7 @@ export { GalleryPage } from './GalleryPage';
 export type { TemplateGalleryProps } from './TemplateGallery';
 export type { FilterState, GalleryFiltersProps } from './GalleryFilters';
 export type { GalleryPageProps } from './GalleryPage';
+
+if (typeof window !== 'undefined') {
+  pluginRegistry.register(galleryPlugin);
+}

@@ -40,6 +40,16 @@ Track potential issues, inconsistencies, and improvements found during code-grou
 - **[feature flags] Disabled defaults may hide features**
   - Location: `core/feature-flags.ts`
   - Note: Gallery, animation-engine, export, user-management are disabled by default; plugins enable on install. Ensure install paths are executed where required.
+ 
+ - **[plugins] Missing auto-registration for some plugins**
+   - Location: `plugins/gallery/index.ts`, `plugins/form-builder/index.ts`, `plugins/ai-generator/index.ts`, `plugins/animation-engine/index.ts`
+   - Problem: Unlike `visual-editor`, these do not auto-register with `pluginRegistry.register(...)` in the browser, so their feature flags may not enable and event listeners/components might not be initialized.
+   - Recommendation: Add a browser-guarded auto-register block similar to visual-editor:
+     ```ts
+     if (typeof window !== 'undefined') {
+       pluginRegistry.register(thePlugin);
+     }
+     ```
 
 # Next Actions
 - Add EVENT_NAMES constants for element events; update emitters.

@@ -5,7 +5,7 @@
 
 import { Plugin } from '@/core/types';
 import { pluginRegistry } from '@/core/plugin-system';
-import { eventBus } from '@/core/event-bus';
+import { eventBus, EVENT_NAMES } from '@/core/event-bus';
 
 export const visualEditorPlugin: Plugin = {
   name: 'visual-editor',
@@ -15,11 +15,11 @@ export const visualEditorPlugin: Plugin = {
   
   install: async () => {
     // Register event listeners
-    eventBus.on('template:load', (data) => {
+    eventBus.on(EVENT_NAMES.TEMPLATE_LOAD, (data) => {
       console.log('Template loaded in visual editor:', data);
     });
 
-    eventBus.on('element:created', (data) => {
+    eventBus.on(EVENT_NAMES.ELEMENT_CREATED, (data) => {
       console.log('Element created:', data);
     });
 

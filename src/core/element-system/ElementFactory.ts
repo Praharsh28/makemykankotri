@@ -6,7 +6,7 @@
 import { v4 as uuid } from 'uuid';
 import { Element, ElementType, Asset } from '../types';
 import { elementRegistry } from './ElementRegistry';
-import { eventBus } from '../event-bus';
+import { eventBus, EVENT_NAMES } from '../event-bus';
 
 /**
  * Create a new element
@@ -35,7 +35,7 @@ export function createElement(
     ...config,
   };
 
-  eventBus.emit('element:created', { element });
+  eventBus.emit(EVENT_NAMES.ELEMENT_CREATED, { element });
   return element;
 }
 
@@ -52,7 +52,7 @@ export function updateElement(
     updatedAt: new Date(),
   };
 
-  eventBus.emit('element:updated', {
+  eventBus.emit(EVENT_NAMES.ELEMENT_UPDATED, {
     elementId: element.id,
     changes,
     element: updated,
@@ -123,7 +123,7 @@ export function duplicateElement(element: Element): Element {
     updatedAt: new Date(),
   };
 
-  eventBus.emit('element:duplicated', {
+  eventBus.emit(EVENT_NAMES.ELEMENT_DUPLICATED, {
     originalId: element.id,
     duplicate,
   });
@@ -135,7 +135,7 @@ export function duplicateElement(element: Element): Element {
  * Delete element event (actual deletion handled by store)
  */
 export function deleteElement(elementId: string): void {
-  eventBus.emit('element:deleted', { elementId });
+  eventBus.emit(EVENT_NAMES.ELEMENT_DELETED, { elementId });
 }
 
 /**

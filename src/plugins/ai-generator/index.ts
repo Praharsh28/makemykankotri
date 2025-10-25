@@ -5,6 +5,7 @@
 
 import { Plugin } from '@/core/types';
 import { featureFlags } from '@/core/feature-flags';
+import { pluginRegistry } from '@/core/plugin-system';
 
 export const aiGeneratorPlugin: Plugin = {
   name: 'ai-generator',
@@ -26,3 +27,7 @@ export { V0Generator } from './V0Generator';
 export { AIPromptDialog } from './AIPromptDialog';
 export type { V0GenerationResult, V0Config } from './types';
 export type { AIPromptDialogProps } from './AIPromptDialog';
+
+if (typeof window !== 'undefined') {
+  pluginRegistry.register(aiGeneratorPlugin);
+}

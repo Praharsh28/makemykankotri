@@ -4,7 +4,7 @@
  */
 
 import { Element, ElementType, Asset } from '../types';
-import { eventBus } from '../event-bus';
+import { eventBus, EVENT_NAMES } from '../event-bus';
 
 export interface ElementTypeConfig {
   name: string;
@@ -32,7 +32,7 @@ class ElementRegistryImpl {
 
     // Register
     this.elementTypes.set(type, config);
-    eventBus.emit('element-type:registered', { type, config });
+    eventBus.emit(EVENT_NAMES.ELEMENT_TYPE_REGISTERED, { type, config });
     console.log(`✓ Element type "${type}" registered`);
   }
 
@@ -45,7 +45,7 @@ class ElementRegistryImpl {
     }
 
     this.elementTypes.delete(type);
-    eventBus.emit('element-type:unregistered', { type });
+    eventBus.emit(EVENT_NAMES.ELEMENT_TYPE_UNREGISTERED, { type });
     console.log(`✓ Element type "${type}" unregistered`);
   }
 

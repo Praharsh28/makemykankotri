@@ -78,7 +78,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       elements: [...template.elements, element],
     });
 
-    eventBus.emit('element:created', { element });
+    eventBus.emit(EVENT_NAMES.ELEMENT_CREATED, { element });
   },
 
   updateElement: (elementId: string, updates: Partial<Element>) => {

@@ -5,6 +5,7 @@
 
 import { Plugin } from '@/core/types';
 import { featureFlags } from '@/core/feature-flags';
+import { pluginRegistry } from '@/core/plugin-system';
 
 export const formBuilderPlugin: Plugin = {
   name: 'form-builder',
@@ -37,3 +38,7 @@ export type { FormPreviewProps } from './FormPreview';
 export type { FileUploadProps } from './FileUpload';
 export type { FormStep, FormStepperProps } from './FormStepper';
 export type { UseDraftSaveOptions, UseDraftSaveReturn } from './useDraftSave';
+
+if (typeof window !== 'undefined') {
+  pluginRegistry.register(formBuilderPlugin);
+}

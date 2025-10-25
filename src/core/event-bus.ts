@@ -101,11 +101,25 @@ export const EVENT_NAMES = {
   TEMPLATE_UPDATED: 'template:updated',
   TEMPLATE_PUBLISHED: 'template:published',
   TEMPLATE_DELETED: 'template:deleted',
+  TEMPLATE_LOAD: 'template:load',
   
+  // Element events
+  ELEMENT_CREATED: 'element:created',
+  ELEMENT_UPDATED: 'element:updated',
+  ELEMENT_DUPLICATED: 'element:duplicated',
+  ELEMENT_DELETED: 'element:deleted',
+
+  // Element type registry events
+  ELEMENT_TYPE_REGISTERED: 'element-type:registered',
+  ELEMENT_TYPE_UNREGISTERED: 'element-type:unregistered',
+
   // User events
   USER_FORM_SUBMITTED: 'user:form:submitted',
   USER_KANKOTRI_GENERATED: 'user:kankotri:generated',
   USER_KANKOTRI_SHARED: 'user:kankotri:shared',
+  FORM_SUBMITTED: 'form:submitted',
+  FORM_ERROR: 'form:error',
+  FORM_DATA_CHANGED: 'form:dataChanged',
   
   // Animation events
   ANIMATION_APPLIED: 'animation:applied',
@@ -117,6 +131,11 @@ export const EVENT_NAMES = {
   STORAGE_SAVE_ERROR: 'storage:save:error',
   STORAGE_LOAD_SUCCESS: 'storage:load:success',
   STORAGE_LOAD_ERROR: 'storage:load:error',
+
+  // AI Generator
+  AI_GENERATION_START: 'ai:generation:start',
+  AI_GENERATION_SUCCESS: 'ai:generation:success',
+  AI_GENERATION_ERROR: 'ai:generation:error',
 } as const;
 
 // Type-safe event data interfaces
