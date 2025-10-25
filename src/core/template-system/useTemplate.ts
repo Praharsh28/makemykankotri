@@ -109,8 +109,9 @@ export function useTemplates(options?: {
     setError(null);
     try {
       // Add timeout to prevent infinite loading
-      const timeoutPromise = new Promise<Template[]>((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout')), 5000)
+      // Resolve with empty array instead of rejecting to avoid console errors
+      const timeoutPromise = new Promise<Template[]>((resolve) => 
+        setTimeout(() => resolve([]), 5000)
       );
       
       const loaded = await Promise.race([
@@ -119,11 +120,8 @@ export function useTemplates(options?: {
       ]);
       setTemplates(loaded);
     } catch (err) {
-      // Silently handle timeout/errors - just show empty state
-      const errorMsg = (err as Error).message;
-      if (errorMsg !== 'Request timeout') {
-        console.warn('Templates not available:', errorMsg);
-      }
+      // Handle actual errors (not timeout)
+      console.warn('Templates not available:', (err as Error).message);
       setError(err as Error);
       setTemplates([]); // Set empty array on error so page can render
     } finally {
