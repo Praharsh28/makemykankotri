@@ -28,6 +28,7 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [emailConfirmationNeeded, setEmailConfirmationNeeded] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -49,7 +50,7 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
     }
 
     try {
-      const { error: signUpError } = await signUp(email, password, {
+      const { data, error: signUpError } = await signUp(email, password, {
         full_name: fullName,
       });
 
@@ -64,16 +65,24 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
         return;
       }
 
-      setSuccess(true);
+      // Check if email confirmation is required
+      const needsEmailConfirmation = !!(data?.user && !data?.session);
       
-      // Wait 2 seconds before redirecting
-      setTimeout(() => {
-        if (onSuccess) {
-          onSuccess();
-        } else {
-          router.push(redirectTo);
-        }
-      }, 2000);
+      setEmailConfirmationNeeded(needsEmailConfirmation);
+      setSuccess(true);
+      setLoading(false);
+      
+      if (!needsEmailConfirmation) {
+        // No email confirmation needed - redirect after showing success
+        setTimeout(() => {
+          if (onSuccess) {
+            onSuccess();
+          } else {
+            router.push(redirectTo);
+          }
+        }, 1500);
+      }
+      // If email confirmation needed, stay on page to show message
     } catch (err) {
       console.error('Signup error:', err);
       setError('⚠️ Authentication system is not configured. Please contact the administrator.');
@@ -92,11 +101,20 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
               </svg>
             </div>
             <h2 className="font-heading text-2xl font-bold text-neutral-900 mb-2">
-              Account Created!
+              {emailConfirmationNeeded ? 'Check Your Email!' : 'Welcome!'}
             </h2>
-            <p className="text-neutral-600">
-              Check your email to verify your account.
+            <p className="text-neutral-600 mb-4">
+              {emailConfirmationNeeded
+                ? 'We\'ve sent you a confirmation email. Please check your inbox and click the link to activate your account.'
+                : 'Your account has been created successfully. Redirecting to your dashboard...'}
             </p>
+            {emailConfirmationNeeded && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+                <p className="text-sm text-blue-800">
+                  💡 <strong>Tip:</strong> Check your spam folder if you don't see the email within a few minutes.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
