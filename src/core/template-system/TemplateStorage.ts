@@ -12,6 +12,10 @@ export class TemplateStorage {
    * Save template (insert or update)
    */
   async save(template: Template): Promise<Template> {
+    // Attempt to set ownership when session is available
+    const { data: sessionData } = await supabase.auth.getSession();
+    const ownerId = sessionData?.session?.user?.id ?? null;
+
     const { data, error } = await supabase
       .from('templates')
       .upsert({
@@ -28,7 +32,7 @@ export class TemplateStorage {
         description: template.description,
         published: template.published,
         version: template.version,
-        created_by: null, // Development only - will be set from auth in production
+        created_by: ownerId, // null in dev (anon) or session.user.id when available
         updated_at: new Date().toISOString(),
       })
       .select()

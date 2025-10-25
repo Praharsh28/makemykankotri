@@ -5,6 +5,7 @@
 
 import { Plugin } from '@/core/types';
 import { featureFlags } from '@/core/feature-flags';
+import { pluginRegistry } from '@/core/plugin-system';
 
 export const templateRendererPlugin: Plugin = {
   name: 'template-renderer',
@@ -33,3 +34,7 @@ export { generateSlug, generateInvitationUrl, saveInvitation } from './urlGenera
 export type { TemplateRendererProps } from './TemplateRenderer';
 export type { ShareButtonProps } from './ShareButton';
 export type { SaveInvitationResult } from './urlGenerator';
+
+if (typeof window !== 'undefined') {
+  pluginRegistry.register(templateRendererPlugin);
+}
