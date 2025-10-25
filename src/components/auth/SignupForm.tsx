@@ -104,9 +104,11 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
               {emailConfirmationNeeded ? 'Check Your Email!' : 'Welcome!'}
             </h2>
             <p className="text-neutral-600 mb-4">
-              {emailConfirmationNeeded
-                ? 'We\'ve sent you a confirmation email. Please check your inbox and click the link to activate your account.'
-                : 'Your account has been created successfully. Redirecting to your dashboard...'}
+              {emailConfirmationNeeded ? (
+                <>We&apos;ve sent you a confirmation email. Please check your inbox and click the link to activate your account.</>
+              ) : (
+                <>Your account has been created successfully. Redirecting to your dashboard...</>
+              )}
             </p>
             {emailConfirmationNeeded && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
