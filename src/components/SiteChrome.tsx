@@ -16,7 +16,12 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, profile, signOut } = useAuth();
 
   // Hide chrome on these route prefixes
-  const hideChrome = pathname?.startsWith('/auth') || pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard');
+  const hideChrome =
+    pathname?.startsWith('/auth') ||
+    pathname?.startsWith('/admin') ||
+    pathname?.startsWith('/dashboard') ||
+    pathname?.startsWith('/create') ||
+    pathname?.startsWith('/invitation');
 
   async function handleLogout() {
     await signOut();

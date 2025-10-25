@@ -35,42 +35,7 @@ export default function TemplatesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header Navigation */}
-      <header className="border-b border-neutral-200 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl">💍</span>
-              <span className="font-heading font-bold text-xl text-neutral-900">
-                MakeMyKankotri
-              </span>
-            </Link>
-
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/templates" className="text-primary-600 font-semibold">
-                Templates
-              </Link>
-              <Link href="/features" className="text-neutral-700 hover:text-primary-600 transition-colors font-medium">
-                Features
-              </Link>
-              <Link href="/how-it-works" className="text-neutral-700 hover:text-primary-600 transition-colors font-medium">
-                How It Works
-              </Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <Link href="/auth/login" className="text-neutral-700 hover:text-primary-600 transition-colors font-medium">
-                Login
-              </Link>
-              <Link href="/auth/signup" className="bg-primary-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-600 transition-all shadow-md">
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-primary-50 to-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -190,42 +155,6 @@ export default function TemplatesPage() {
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <footer className="bg-neutral-900 text-white py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-2 mb-4">
-                <span className="text-2xl">💍</span>
-                <span className="font-heading font-bold text-xl">MakeMyKankotri</span>
-              </div>
-              <p className="text-neutral-400 max-w-md">
-                Create beautiful, animated wedding invitations with AI.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li><Link href="/templates" className="text-neutral-400 hover:text-white transition-colors">Templates</Link></li>
-                <li><Link href="/features" className="text-neutral-400 hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="/how-it-works" className="text-neutral-400 hover:text-white transition-colors">How It Works</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Account</h3>
-              <ul className="space-y-2">
-                <li><Link href="/auth/login" className="text-neutral-400 hover:text-white transition-colors">Login</Link></li>
-                <li><Link href="/auth/signup" className="text-neutral-400 hover:text-white transition-colors">Sign Up</Link></li>
-                <li><Link href="/dashboard" className="text-neutral-400 hover:text-white transition-colors">Dashboard</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-neutral-800 pt-8 text-center text-neutral-400">
-            <p>© 2025 MakeMyKankotri. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }

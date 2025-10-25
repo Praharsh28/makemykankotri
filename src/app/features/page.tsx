@@ -8,29 +8,7 @@ import Link from 'next/link';
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-neutral-200 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl">💍</span>
-              <span className="font-heading font-bold text-xl text-neutral-900">
-                MakeMyKankotri
-              </span>
-            </Link>
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/templates" className="text-neutral-700 hover:text-primary-600 transition-colors font-medium">Templates</Link>
-              <Link href="/features" className="text-primary-600 font-semibold">Features</Link>
-              <Link href="/how-it-works" className="text-neutral-700 hover:text-primary-600 transition-colors font-medium">How It Works</Link>
-            </nav>
-            <Link href="/templates" className="bg-primary-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-600 transition-all shadow-md">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary-50 to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -201,13 +179,6 @@ export default function FeaturesPage() {
           </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-neutral-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-neutral-400">© 2025 MakeMyKankotri. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }
