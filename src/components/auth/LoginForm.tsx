@@ -32,14 +32,22 @@ export function LoginForm({ onSuccess, redirectTo = '/dashboard' }: LoginFormPro
     setLoading(true);
 
     try {
-      const { error: signInError } = await signIn(email, password);
+      // Add 10-second timeout for sign-in
+      const timeoutPromise = new Promise<{ error: { message: string } }>((resolve) =>
+        setTimeout(() => resolve({ error: { message: 'Connection timeout. Supabase may not be configured.' } }), 10000)
+      );
 
-      if (signInError) {
+      const result = await Promise.race([
+        signIn(email, password),
+        timeoutPromise
+      ]);
+
+      if (result.error) {
         // Provide helpful message for common setup issues
-        if (signInError.message.includes('fetch') || signInError.message.includes('NetworkError')) {
+        if (result.error.message.includes('fetch') || result.error.message.includes('NetworkError') || result.error.message.includes('timeout')) {
           setError('⚠️ Supabase is not configured. Please set up your Supabase project and add environment variables.');
         } else {
-          setError(signInError.message);
+          setError(result.error.message);
         }
         setLoading(false);
         return;

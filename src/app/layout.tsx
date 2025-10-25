@@ -4,6 +4,7 @@ import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Providers } from "@/components/Providers";
 import { SiteChrome } from "@/components/SiteChrome";
+import { ElementInspector } from "@/components/dev/ElementInspector";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -54,6 +55,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${playfair.variable} antialiased`}
       >
         <PerformanceMonitor />
+        <ElementInspector />
         <Providers>
           <ErrorBoundary>
             <SiteChrome>
