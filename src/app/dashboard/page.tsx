@@ -9,6 +9,8 @@
 import React from 'react';
 import Link from 'next/link';
 import dynamicImport from 'next/dynamic';
+import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 // Disable static generation for user dashboard
 export const dynamic = 'force-dynamic';
@@ -24,8 +26,16 @@ const MyTemplatesList = dynamicImport(() => import('@/components/dashboard/MyTem
 });
 
 export default function DashboardPage() {
+  const { profile, signOut } = useAuth();
+
+  async function handleLogout() {
+    await signOut();
+    window.location.href = '/';
+  }
+
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <ProtectedRoute>
+      <div className="min-h-screen bg-neutral-50">
       {/* Header */}
       <header className="bg-white border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,9 +54,17 @@ export default function DashboardPage() {
               <Link href="/templates" className="text-neutral-700 hover:text-primary-600 transition-colors font-medium">
                 Create New
               </Link>
-              <Link href="/auth/login" className="text-neutral-700 hover:text-primary-600 transition-colors font-medium">
-                Account
-              </Link>
+              <div className="flex items-center gap-4 pl-4 border-l border-neutral-200">
+                <span className="text-sm text-neutral-600">
+                  {profile?.full_name || 'User'}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="text-sm text-neutral-700 hover:text-red-600 transition-colors font-medium"
+                >
+                  Logout
+                </button>
+              </div>
             </nav>
           </div>
         </div>
@@ -57,7 +75,7 @@ export default function DashboardPage() {
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="font-heading font-bold text-4xl text-neutral-900 mb-2">
-            My Invitations
+            Welcome, {profile?.full_name || 'User'}! 👋
           </h1>
           <p className="text-lg text-neutral-600">
             View and manage all your wedding invitations
@@ -151,5 +169,6 @@ export default function DashboardPage() {
         </div>
       </footer>
     </div>
+    </ProtectedRoute>
   );
 }

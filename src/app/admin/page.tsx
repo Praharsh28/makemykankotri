@@ -9,6 +9,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useTemplates } from '@/core/template-system';
+import { AdminRoute } from '@/components/auth/AdminRoute';
 
 export default function AdminDashboardPage() {
   const { templates } = useTemplates({});
@@ -19,6 +20,7 @@ export default function AdminDashboardPage() {
   const totalUses = templates.reduce((sum, t) => sum + (t.uses || 0), 0);
 
   return (
+    <AdminRoute>
     <div className="min-h-screen bg-neutral-50">
       {/* Header */}
       <header className="bg-white border-b border-neutral-200">
@@ -198,5 +200,6 @@ export default function AdminDashboardPage() {
         </div>
       </main>
     </div>
+    </AdminRoute>
   );
 }

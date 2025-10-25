@@ -71,6 +71,30 @@ CREATE TABLE IF NOT EXISTS public.invitations (
 );
 
 -- =============================================
+-- USER PROFILES TABLE
+-- =============================================
+
+CREATE TABLE IF NOT EXISTS public.user_profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  full_name TEXT NOT NULL DEFAULT 'User',
+  avatar_url TEXT,
+  phone TEXT,
+  role TEXT DEFAULT 'user' CHECK (role IN ('user', 'admin')),
+  is_active BOOLEAN DEFAULT true,
+  is_banned BOOLEAN DEFAULT false,
+  
+  -- Preferences
+  theme TEXT DEFAULT 'light' CHECK (theme IN ('light', 'dark')),
+  language TEXT DEFAULT 'en',
+  email_notifications BOOLEAN DEFAULT true,
+  
+  -- Timestamps
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  last_login_at TIMESTAMPTZ
+);
+
+-- =============================================
 -- INDEXES FOR PERFORMANCE
 -- =============================================
 
@@ -93,6 +117,10 @@ CREATE INDEX IF NOT EXISTS idx_invitations_template_id ON public.invitations(tem
 CREATE INDEX IF NOT EXISTS idx_invitations_created_by ON public.invitations(created_by);
 CREATE INDEX IF NOT EXISTS idx_invitations_slug ON public.invitations(slug);
 CREATE INDEX IF NOT EXISTS idx_invitations_is_public ON public.invitations(is_public);
+
+-- User profiles indexes
+CREATE INDEX IF NOT EXISTS idx_user_profiles_role ON public.user_profiles(role);
+CREATE INDEX IF NOT EXISTS idx_user_profiles_is_active ON public.user_profiles(is_active);
 
 -- =============================================
 -- HELPER FUNCTIONS
@@ -137,6 +165,24 @@ BEGIN
 END;
 $$;
 
+-- Function to auto-create user profile on signup
+CREATE OR REPLACE FUNCTION handle_new_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  INSERT INTO public.user_profiles (id, full_name, role)
+  VALUES (
+    NEW.id,
+    COALESCE(NEW.raw_user_meta_data->>'full_name', 'User'),
+    'user'
+  );
+  RETURN NEW;
+END;
+$$;
+
 -- =============================================
 -- TRIGGERS
 -- =============================================
@@ -155,13 +201,28 @@ CREATE TRIGGER trigger_invitations_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+-- Trigger for user_profiles updated_at
+DROP TRIGGER IF EXISTS trigger_user_profiles_updated_at ON public.user_profiles;
+CREATE TRIGGER trigger_user_profiles_updated_at
+  BEFORE UPDATE ON public.user_profiles
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
+-- Trigger to auto-create profile on user signup
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW
+  EXECUTE FUNCTION handle_new_user();
+
 -- =============================================
 -- ROW LEVEL SECURITY (RLS)
 -- =============================================
 
--- Enable RLS on both tables
+-- Enable RLS on all tables
 ALTER TABLE public.templates ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.invitations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
 
 -- =============================================
 -- TEMPLATES RLS POLICIES (Development-Friendly)
@@ -252,6 +313,26 @@ CREATE POLICY "Allow delete for dev users inv"
   USING (
     created_by IS NULL OR auth.uid() = created_by
   );
+
+-- =============================================
+-- USER PROFILES RLS POLICIES
+-- =============================================
+
+-- Drop existing policies
+DROP POLICY IF EXISTS "Users can view own profile" ON public.user_profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON public.user_profiles;
+
+-- SELECT: Users can view their own profile
+CREATE POLICY "Users can view own profile"
+  ON public.user_profiles FOR SELECT
+  TO public
+  USING (auth.uid() = id);
+
+-- UPDATE: Users can update their own profile
+CREATE POLICY "Users can update own profile"
+  ON public.user_profiles FOR UPDATE
+  TO public
+  USING (auth.uid() = id);
 
 -- =============================================
 -- SAMPLE DATA (For Testing)
