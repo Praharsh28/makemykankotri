@@ -115,16 +115,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     // Get initial session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      console.log('📡 Initial session:', session ? 'Found' : 'None');
+      console.log('📡 Initial session:', session ? `Found (user: ${session.user?.email})` : 'None');
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
         console.log('👤 Fetching profile for:', session.user.email);
         await fetchProfile(session.user.id, session.user.email || '');
+      } else {
+        // No session - ensure profile is null
+        setProfile(null);
       }
       
-      console.log('✅ Auth loading complete');
+      console.log('✅ Auth loading complete. Authenticated:', !!session?.user);
       setLoading(false);
     });
 

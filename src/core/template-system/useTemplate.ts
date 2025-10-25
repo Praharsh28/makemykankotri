@@ -119,7 +119,11 @@ export function useTemplates(options?: {
       ]);
       setTemplates(loaded);
     } catch (err) {
-      console.error('Failed to load templates:', err);
+      // Silently handle timeout/errors - just show empty state
+      const errorMsg = (err as Error).message;
+      if (errorMsg !== 'Request timeout') {
+        console.warn('Templates not available:', errorMsg);
+      }
       setError(err as Error);
       setTemplates([]); // Set empty array on error so page can render
     } finally {
