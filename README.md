@@ -1,49 +1,19 @@
-# 🎊 WebKankotri v2 - Wedding Invitation Platform
+# MakeMyKankotri
 
-**A modern, AI-powered platform for creating beautiful Indian wedding invitations**
+Minimal README. Full documentation for AI agents lives under `/docs`.
 
-[![Tests](https://img.shields.io/badge/tests-558%20passing-success)](./tests)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-15.5-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.1-blue)](https://react.dev/)
+- Start here: [/docs/INDEX.md](./docs/INDEX.md)
+- Overview: [/docs/overview/project-overview.md](./docs/overview/project-overview.md)
+- Architecture: [/docs/overview/architecture-overview.md](./docs/overview/architecture-overview.md)
 
----
+Team: Makemykankotri
 
-## 🌟 Features
+### Test Status
+- **Total Tests:** 558
+- **Passing:** 558 (100%)
+- **Coverage:** Comprehensive
 
-### ✨ Core Features
-- **AI Template Generation** - Generate templates using v0.dev integration
-- **Visual Editor** - Drag-and-drop editor powered by Puck
-- **Dynamic Forms** - Auto-generate forms from templates
-- **Animation Engine** - GSAP + Framer Motion animations
-- **Template Gallery** - Browse and search templates
-- **Template Renderer** - Render templates with custom data
-
-### 👤 User Features
-- **Authentication** - Secure login/signup with Supabase
-- **User Dashboard** - Manage your templates
-- **Template Management** - Create, edit, delete, duplicate
-- **Search & Filters** - Find templates quickly
-- **User Profiles** - Manage account settings
-
-### 📄 Export Features
-- **PDF Export** - Export as high-quality PDF (custom size, A4)
-- **PNG Export** - Export as PNG with transparency
-- **JPEG Export** - Export as compressed JPEG
-- **Thumbnail Generation** - Auto-generate preview thumbnails
-- **Image Optimization** - Optimize images to target size
-
-### 🎨 UI/UX Features
-- **Toast Notifications** - Success/error/warning/info toasts
-- **Alert Messages** - Inline semantic alerts
-- **Loading States** - Smooth loading overlays
-- **Design System** - Consistent colors, typography, spacing
-- **Accessibility** - WCAG 2.1 AA compliant
-- **Responsive** - Mobile-first design
-
----
-
-## 🚀 Quick Start
+### 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 20+ 
