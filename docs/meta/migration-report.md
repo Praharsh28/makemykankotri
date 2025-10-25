@@ -37,3 +37,10 @@ See /docs/INDEX.md for full list.
 
 # Safe to delete
 All files listed in "Removed" section above.
+
+# Blueprint folder note
+The `/home/enigma/Desktop/windsurf/projects/webkankotri-v2-blueprint/` folder contains original design docs (00_README.md through WINDSURFRULES.md). These were reference material during development.
+
+**Status:** Superseded by /docs which is grounded in actual code implementation.
+
+The blueprint remains as historical design docs but is NO LONGER the source of truth. All authoritative documentation is now under /docs in this repo.
