@@ -113,7 +113,7 @@ export function SignupForm({ onSuccess, redirectTo = '/dashboard' }: SignupFormP
             {emailConfirmationNeeded && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
                 <p className="text-sm text-blue-800">
-                  💡 <strong>Tip:</strong> Check your spam folder if you don't see the email within a few minutes.
+                  💡 <strong>Tip:</strong> Check your spam folder if you don&apos;t see the email within a few minutes.
                 </p>
               </div>
             )}
