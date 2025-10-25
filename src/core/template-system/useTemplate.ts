@@ -108,10 +108,20 @@ export function useTemplates(options?: {
     setLoading(true);
     setError(null);
     try {
-      const loaded = await templateStorage.list(options);
+      // Add timeout to prevent infinite loading
+      const timeoutPromise = new Promise<Template[]>((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout')), 5000)
+      );
+      
+      const loaded = await Promise.race([
+        templateStorage.list(options),
+        timeoutPromise
+      ]);
       setTemplates(loaded);
     } catch (err) {
+      console.error('Failed to load templates:', err);
       setError(err as Error);
+      setTemplates([]); // Set empty array on error so page can render
     } finally {
       setLoading(false);
     }
