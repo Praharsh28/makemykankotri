@@ -156,7 +156,15 @@ export function LoginForm({ onSuccess, redirectTo = '/dashboard' }: LoginFormPro
 
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-neutral-600">
-              Don&apos;t have an account?{' '}
+          <div className="mb-2">
+            <Link
+              href="/auth/forgot-password"
+              className="text-primary-500 hover:text-primary-600 font-medium"
+            >
+              Forgot your password?
+            </Link>
+          </div>
+          Don&apos;t have an account?{' '}
           <Link
             href="/auth/signup"
             className="text-primary-500 hover:text-primary-600 font-medium"

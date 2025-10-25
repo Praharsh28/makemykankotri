@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Cinzel, Playfair_Display } from "next/font/google";
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Providers } from "@/components/Providers";
+import { SiteChrome } from "@/components/SiteChrome";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -55,7 +56,9 @@ export default function RootLayout({
         <PerformanceMonitor />
         <Providers>
           <ErrorBoundary>
-            {children}
+            <SiteChrome>
+              {children}
+            </SiteChrome>
           </ErrorBoundary>
         </Providers>
       </body>
