@@ -321,12 +321,19 @@ CREATE POLICY "Allow delete for dev users inv"
 -- Drop existing policies
 DROP POLICY IF EXISTS "Users can view own profile" ON public.user_profiles;
 DROP POLICY IF EXISTS "Users can update own profile" ON public.user_profiles;
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.user_profiles;
 
 -- SELECT: Users can view their own profile
 CREATE POLICY "Users can view own profile"
   ON public.user_profiles FOR SELECT
   TO public
   USING (auth.uid() = id);
+
+-- INSERT: Users can create their own profile
+CREATE POLICY "Users can insert own profile"
+  ON public.user_profiles FOR INSERT
+  TO public
+  WITH CHECK (auth.uid() = id);
 
 -- UPDATE: Users can update their own profile
 CREATE POLICY "Users can update own profile"

@@ -47,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single();
 
       if (data) {
+        console.log('✅ Profile loaded:', data.full_name);
         setProfile({
           id: data.id,
           full_name: data.full_name,
@@ -54,9 +55,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           role: data.role,
           email: userEmail,
         });
-      } else if (error) {
+      } else if (error && error.code === 'PGRST116') {
         // Profile doesn't exist - create one for existing users
-        const { data: newProfile } = await supabase
+        console.log('⚠️ Profile not found, creating...');
+        const { data: newProfile, error: insertError } = await supabase
           .from('user_profiles')
           .insert({
             id: userId,
@@ -67,6 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           .single();
 
         if (newProfile) {
+          console.log('✅ Profile created:', newProfile.full_name);
           setProfile({
             id: newProfile.id,
             full_name: newProfile.full_name,
@@ -74,10 +77,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             role: newProfile.role,
             email: userEmail,
           });
+        } else {
+          console.error('❌ Failed to create profile:', insertError);
+          // Still set fallback profile
+          setProfile({
+            id: userId,
+            full_name: 'User',
+            role: 'user',
+            email: userEmail,
+          });
         }
+      } else {
+        console.error('❌ Profile error:', error);
+        // Set fallback profile
+        setProfile({
+          id: userId,
+          full_name: 'User',
+          role: 'user',
+          email: userEmail,
+        });
       }
     } catch (err) {
-      console.error('Error fetching profile:', err);
+      console.error('❌ Error in fetchProfile:', err);
       // Set minimal profile to prevent infinite loading
       setProfile({
         id: userId,
@@ -89,22 +110,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
+    console.log('🔄 Auth initializing...');
+    
     // Get initial session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      console.log('📡 Initial session:', session ? 'Found' : 'None');
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
+        console.log('👤 Fetching profile for:', session.user.email);
         await fetchProfile(session.user.id, session.user.email || '');
       }
       
+      console.log('✅ Auth loading complete');
       setLoading(false);
     });
 
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('🔔 Auth event:', event, session ? 'Session exists' : 'No session');
       setSession(session);
       setUser(session?.user ?? null);
       
