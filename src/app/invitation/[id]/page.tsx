@@ -7,7 +7,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { templateStorage } from '@/core/template-system';
@@ -19,8 +19,11 @@ import type { Template } from '@/core/types';
 export default function ViewInvitationPage({ 
   params 
 }: { 
-  params: { id: string } 
+  params: Promise<{ id: string }> 
 }) {
+  // Unwrap params Promise (Next.js 15 requirement)
+  const { id } = use(params);
+  
   const searchParams = useSearchParams();
   const [template, setTemplate] = useState<Template | null>(null);
   const [invitationData, setInvitationData] = useState<Record<string, unknown>>({});
@@ -31,7 +34,7 @@ export default function ViewInvitationPage({
   useEffect(() => {
     loadInvitation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.id]);
+  }, [id]);
 
   async function loadInvitation() {
     try {
@@ -160,13 +163,13 @@ export default function ViewInvitationPage({
               {/* Export PDF */}
               <ExportPDFButton
                 elementId="invitation-content"
-                filename={`wedding-invitation-${params.id}.pdf`}
+                filename={`wedding-invitation-${id}.pdf`}
               />
 
               {/* Export Image */}
               <ExportImageButton
                 elementId="invitation-content"
-                filename={`wedding-invitation-${params.id}.png`}
+                filename={`wedding-invitation-${id}.png`}
                 format="png"
               />
             </div>

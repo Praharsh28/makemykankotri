@@ -6,13 +6,16 @@
 
 'use client';
 
-import React from 'react';
+import React, { use } from 'react';
 import { EditorPage } from '@/plugins/visual-editor/EditorPage';
 
 export default function AdminEditorPage({ 
   params 
 }: { 
-  params: { id: string } 
+  params: Promise<{ id: string }> 
 }) {
-  return <EditorPage templateId={params.id} />;
+  // Unwrap params Promise (Next.js 15 requirement)
+  const { id } = use(params);
+  
+  return <EditorPage templateId={id} />;
 }

@@ -7,7 +7,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { templateStorage } from '@/core/template-system';
@@ -18,8 +18,11 @@ import type { Template } from '@/core/types';
 export default function CreateInvitationPage({ 
   params 
 }: { 
-  params: { templateId: string } 
+  params: Promise<{ templateId: string }> 
 }) {
+  // Unwrap params Promise (Next.js 15 requirement)
+  const { templateId } = use(params);
+  
   const router = useRouter();
   const [template, setTemplate] = useState<Template | null>(null);
   const [formData, setFormData] = useState<Record<string, unknown>>({});
@@ -29,12 +32,12 @@ export default function CreateInvitationPage({
   useEffect(() => {
     loadTemplate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.templateId]);
+  }, [templateId]);
 
   async function loadTemplate() {
     try {
       setLoading(true);
-      const loaded = await templateStorage.load(params.templateId);
+      const loaded = await templateStorage.load(templateId);
       setTemplate(loaded);
     } catch (err) {
       setError((err as Error).message);
@@ -55,7 +58,7 @@ export default function CreateInvitationPage({
 
       // For now, redirect with data in URL (temporary)
       const dataParam = encodeURIComponent(JSON.stringify(data));
-      router.push(`/invitation/${invitationId}?template=${params.templateId}&data=${dataParam}`);
+      router.push(`/invitation/${invitationId}?template=${templateId}&data=${dataParam}`);
     } catch (err) {
       setError((err as Error).message);
     }
