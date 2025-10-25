@@ -78,8 +78,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             email: userEmail,
           });
         } else {
-          console.error('❌ Failed to create profile:', insertError);
-          // Still set fallback profile
+          console.error('❌ Failed to create profile:', insertError?.message || insertError);
+          console.log('💡 This is normal if RLS policies prevent profile creation. Using fallback profile.');
+          // Still set fallback profile so user can continue
           setProfile({
             id: userId,
             full_name: 'User',
