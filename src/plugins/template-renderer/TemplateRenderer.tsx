@@ -75,6 +75,7 @@ function RenderedElement({ element, data }: RenderedElementProps) {
   if (element.type === 'image') {
     const imageContent = element.content as { url: string; alt: string };
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         data-element-id={element.id}
         src={imageContent.url}
@@ -89,6 +90,7 @@ function RenderedElement({ element, data }: RenderedElementProps) {
     return (
       <div data-element-id={element.id} style={{ ...style, display: 'flex', gap: '8px' }}>
         {images.map((img, idx) => (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             key={idx}
             src={img.url}

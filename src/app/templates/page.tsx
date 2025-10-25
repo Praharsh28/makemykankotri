@@ -8,6 +8,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTemplates } from '@/core/template-system';
 
 export default function TemplatesPage() {
@@ -123,10 +124,12 @@ export default function TemplatesPage() {
                 {/* Thumbnail */}
                 <div className="aspect-[3/4] bg-gradient-to-br from-primary-50 to-secondary-50 relative overflow-hidden">
                   {template.thumbnail ? (
-                    <img
+                    <Image
                       src={template.thumbnail}
                       alt={template.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-neutral-300">

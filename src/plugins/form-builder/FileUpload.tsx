@@ -179,6 +179,7 @@ export function FileUpload({
         <div className="border border-neutral-200 rounded-lg p-4 bg-neutral-50">
           <div className="flex items-start gap-4">
             {preview && (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={preview}
                 alt="Preview"

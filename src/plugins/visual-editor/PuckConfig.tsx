@@ -140,6 +140,7 @@ export const ImageComponent: ComponentConfig<{
     editable: false,
   },
   render: ({ src, alt, width, height, objectFit }) => (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt={alt}
